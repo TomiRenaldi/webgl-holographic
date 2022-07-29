@@ -14,11 +14,6 @@ export default class Renderer {
         this.scene = this.experience.scene
         this.camera = this.experience.camera
 
-        // Debug
-        if (this.debug) {
-            this.debugFolder = this.debug.addFolder('renderer')
-        }
-
         this.usePostprocess = false
 
         this.setInstance()
@@ -56,45 +51,6 @@ export default class Renderer {
         // Add stats panel
         if (this.stats) {
             this.stats.setRenderPanel(this.context)
-        }
-
-        // Debug
-        if (this.debug) {
-            this.debugFolder
-                .addColor(
-                    this,
-                    'clearColor'
-                )
-                .onChange(() => {
-                    this.instance.setClearColor(this.clearColor)
-                })
-
-            this.debugFolder
-                .add(
-                    this.instance,
-                    'toneMapping',
-                    {
-                        'NoToneMapping': THREE.NoToneMapping,
-                        'LinearToneMapping': THREE.LinearToneMapping,
-                        'ReinhardToneMapping': THREE.ReinhardToneMapping,
-                        'CineonToneMapping': THREE.CineonToneMapping,
-                        'ACESFilmicToneMapping': THREE.ACESFilmicToneMapping
-                    }
-                )
-                .onChange(() => {
-                    this.scene.traverse((_child) => {
-                        if (_child instanceof THREE.Mesh)
-                            _child.material.needsUpdate = true
-                    })
-                })
-
-            this.debugFolder
-                .add(
-                    this.instance,
-                    'toneMappingExposure'
-                )
-                .min(0)
-                .max(10)
         }
     }
 
