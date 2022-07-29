@@ -11,6 +11,7 @@
     "lil-gui": "^0.17.0",
     "stats.js": "^0.17.0",
     "three": "^0.143.0",
+    "tweakpane": "^3.1.0",
     "vite": "^3.0.3",
     "vite-plugin-glsl": "^0.3.0"
   }
