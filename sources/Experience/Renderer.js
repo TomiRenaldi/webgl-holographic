@@ -3,10 +3,8 @@ import Experience from './Experience.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 
-export default class Renderer
-{
-    constructor(_options = {})
-    {
+export default class Renderer {
+    constructor (_options = {}) {
         this.experience = new Experience()
         this.config = this.experience.config
         this.debug = this.experience.debug
@@ -17,19 +15,17 @@ export default class Renderer
         this.camera = this.experience.camera
 
         // Debug
-        if(this.debug)
-        {
+        if (this.debug) {
             this.debugFolder = this.debug.addFolder('renderer')
         }
-        
+
         this.usePostprocess = false
 
         this.setInstance()
         this.setPostProcess()
     }
 
-    setInstance()
-    {
+    setInstance() {
         this.clearColor = '#010101'
 
         // Renderer
@@ -58,21 +54,18 @@ export default class Renderer
         this.context = this.instance.getContext()
 
         // Add stats panel
-        if(this.stats)
-        {
+        if (this.stats) {
             this.stats.setRenderPanel(this.context)
         }
-        
+
         // Debug
-        if(this.debug)
-        {
+        if (this.debug) {
             this.debugFolder
                 .addColor(
                     this,
                     'clearColor'
                 )
-                .onChange(() =>
-                {
+                .onChange(() => {
                     this.instance.setClearColor(this.clearColor)
                 })
 
@@ -88,15 +81,13 @@ export default class Renderer
                         'ACESFilmicToneMapping': THREE.ACESFilmicToneMapping
                     }
                 )
-                .onChange(() =>
-                {
-                    this.scene.traverse((_child) =>
-                    {
-                        if(_child instanceof THREE.Mesh)
+                .onChange(() => {
+                    this.scene.traverse((_child) => {
+                        if (_child instanceof THREE.Mesh)
                             _child.material.needsUpdate = true
                     })
                 })
-                
+
             this.debugFolder
                 .add(
                     this.instance,
@@ -107,8 +98,7 @@ export default class Renderer
         }
     }
 
-    setPostProcess()
-    {
+    setPostProcess() {
         this.postProcess = {}
 
         /**
@@ -119,9 +109,7 @@ export default class Renderer
         /**
          * Effect composer
          */
-        const RenderTargetClass = this.config.pixelRatio >= 2 ? THREE.WebGLRenderTarget : THREE.WebGLMultisampleRenderTarget
-        // const RenderTargetClass = THREE.WebGLRenderTarget
-        this.renderTarget = new RenderTargetClass(
+        this.renderTarget = new THREE.WebGLRenderTarget(
             this.config.width,
             this.config.height,
             {
@@ -129,7 +117,8 @@ export default class Renderer
                 minFilter: THREE.LinearFilter,
                 magFilter: THREE.LinearFilter,
                 format: THREE.RGBFormat,
-                encoding: THREE.sRGBEncoding
+                encoding: THREE.sRGBEncoding,
+                samples: 2
             }
         )
         this.postProcess.composer = new EffectComposer(this.instance, this.renderTarget)
@@ -139,8 +128,7 @@ export default class Renderer
         this.postProcess.composer.addPass(this.postProcess.renderPass)
     }
 
-    resize()
-    {
+    resize() {
         // Instance
         this.instance.setSize(this.config.width, this.config.height)
         this.instance.setPixelRatio(this.config.pixelRatio)
@@ -150,30 +138,24 @@ export default class Renderer
         this.postProcess.composer.setPixelRatio(this.config.pixelRatio)
     }
 
-    update()
-    {
-        if(this.stats)
-        {
+    update() {
+        if (this.stats) {
             this.stats.beforeRender()
         }
 
-        if(this.usePostprocess)
-        {
+        if (this.usePostprocess) {
             this.postProcess.composer.render()
         }
-        else
-        {
+        else {
             this.instance.render(this.scene, this.camera.instance)
         }
 
-        if(this.stats)
-        {
+        if (this.stats) {
             this.stats.afterRender()
         }
     }
 
-    destroy()
-    {
+    destroy() {
         this.instance.renderLists.dispose()
         this.instance.dispose()
         this.renderTarget.dispose()

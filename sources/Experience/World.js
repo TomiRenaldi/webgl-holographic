@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Holo from './Components/Holo.js'
 import Experience from './Experience.js'
 
 export default class World
@@ -14,20 +15,14 @@ export default class World
         {
             if(_group.name === 'base')
             {
-                this.setDummy()
+                this.setHolo()
             }
         })
     }
 
-    setDummy()
+    setHolo()
     {
-        this.resources.items.broccoliTexture.encoding = THREE.sRGBEncoding
-        
-        const cube = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ map: this.resources.items.broccoliTexture })
-        )
-        this.scene.add(cube)        
+        this.holo = new Holo()     
     }
 
     resize()
