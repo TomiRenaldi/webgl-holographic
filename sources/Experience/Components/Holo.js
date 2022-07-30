@@ -10,6 +10,7 @@ export default class Holo
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.time = this.experience.time
 
         this.setTexture()
         this.setPlane()
@@ -45,5 +46,10 @@ export default class Holo
 
         this.plane.mesh = new THREE.Mesh(this.plane.geometry, this.plane.material)
         this.scene.add(this.plane.mesh)
+    }
+
+    update()
+    {
+        this.plane.material.uniforms.uTime.value = this.time.elapsed * 0.001
     }
 }
