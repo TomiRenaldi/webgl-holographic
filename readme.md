@@ -1,4 +1,4 @@
-# Holographics
+# Holographic
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
