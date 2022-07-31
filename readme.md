@@ -1,4 +1,4 @@
-# Holographic
+# WebGL Holographic
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
@@ -12,7 +12,8 @@ npm install
 npm run dev
 
 # Build for production in the dist/ directory
-npm 
+npm
+``` 
 
 
 # TODO
