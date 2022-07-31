@@ -13,3 +13,11 @@ npm run dev
 
 # Build for production in the dist/ directory
 npm 
+
+
+# TODO
+
+- [x] Plane
+- [x] Texture
+- [ ] RGBA
+- [x] Better lighting
